@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hand Gesture Recognition</title>
+    <!-- <link rel="stylesheet" href="styles.css"> -->
+</head>
+<style>/* General Reset */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    /* Body Setup */
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f5f7fa;
+        color: #333;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    /* Header Styling */
+    h1 {
+        font-size: 2.5rem;
+        color: #1d2d50;
+        font-weight: 600;
+        margin-bottom: 30px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+    }
+    
+    /* Video Feed Styling - Reduced Size */
+    #video-container {
+        position: relative;
+        width: 80%; /* Reduced size */
+        max-width: 500px; /* Maximum width */
+        height: auto;
+        background-color: #ddd;
+        border-radius: 12px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        overflow: hidden;
+        margin-bottom: 30px;
+    }
+    
+    #video-feed {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 12px;
+    }
+    
+    /* Output Container Styling */
+    #output-container {
+        width: 100%;
+        max-width: 750px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 12px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+    
+    label {
+        font-size: 1.25rem;
+        color: #333;
+        font-weight: 500;
+        margin-bottom: 15px;
+        display: inline-block;
+        text-transform: capitalize;
+    }
+    
+    #gesture-output {
+        width: 100%;
+        height: 120px;
+        padding: 15px;
+        font-size: 1.2rem;
+        color: #555;
+        background-color: #f8f8f8;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        resize: none;
+        outline: none;
+        transition: all 0.3s ease;
+    }
+    
+    #gesture-output:focus {
+        border-color: #4e73df;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(78, 115, 223, 0.5);
+    }
+    
+    /* Responsive Styling */
+    @media (max-width: 768px) {
+        body {
+            padding: 20px;
+        }
+    
+        h1 {
+            font-size: 2rem;
+        }
+    
+        #video-container {
+            width: 100%;
+            max-width: 400px; /* Smaller size on mobile */
+        }
+    
+        #gesture-output {
+            height: 100px;
+            font-size: 1.1rem;
+        }
+    }
+    </style>
+<script>
+    function fetchGestureText() {
+        fetch('/gesture_text')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('gesture-output').value = data.predicted_word;
+            });
+    }
+
+    // Fetch gesture text every 3 seconds
+    setInterval(fetchGestureText, 3000);
+</script>
+<body>
+    <h1>Hand Gesture Recognition</h1>
+
+    <div id="video-container">
+        <img id="video-feed" src="{{ url_for('video_feed') }}" alt="Video Feed">
+    </div>
+
+    <div id="output-container">
+        <label for="gesture-output">Recognized Gesture:</label>
+        <textarea id="gesture-output" rows="4" readonly></textarea>
+    </div>
+</body>
+</html>
