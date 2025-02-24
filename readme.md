@@ -24,6 +24,8 @@ This project is a **Tamil Sign Language Recognition System** designed to identif
 4. **Classification**: Random Forest Classifier predicts the corresponding gesture class.
 5. **Output**: Displays the recognized gesture as text.
 
+## Demo Video
+[Click here to watch the demo](vid/demo.mp4)
 
 
 ## Dataset
